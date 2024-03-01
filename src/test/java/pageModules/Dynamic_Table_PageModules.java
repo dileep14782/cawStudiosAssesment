@@ -1,32 +1,27 @@
 package pageModules;
 
-import cucumber.TestContext;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
-import io.github.bonigarcia.wdm.WebDriverManager;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.And;
 import manager.webDriverManager;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import pageObjects.Dynamic_Table_PageObjects;
-import selenium.SeleniumActionWrapper;
-import selenium.Wait;
-
+import java.io.IOException;
 import java.util.List;
 
 public class Dynamic_Table_PageModules {
     WebDriver driver;
-
     Dynamic_Table_PageObjects dynamicTablePageObjects;
-    public static final long MEDIUM_WAIT = 30L;
 
-    public Dynamic_Table_PageModules(TestContext testContext) {
-        driver = testContext.getWebDriverManager().getWebDriver();
-        dynamicTablePageObjects = testContext.getPageObjectManager().getDynamicTablePage(testContext);
+    public Dynamic_Table_PageModules() {
+        this.driver = webDriverManager.getWebDriver();
+        dynamicTablePageObjects=new Dynamic_Table_PageObjects(driver);
     }
 
     @Given("^User navigates to Dynamic Table page$")
-    public void userNavigatesToDynamicTablePage (DataTable dataTable){
+    public void userNavigatesToDynamicTablePage (DataTable dataTable) {
         List<List<String>> url = dataTable.transpose().asLists();
         driver.get(url.get(0).get(0));
     }
@@ -36,4 +31,13 @@ public class Dynamic_Table_PageModules {
         dynamicTablePageObjects.clickTableData();
     }
 
+    @Then("^User insert data in Table Data Input field$")
+    public void userInsertDataInTableDataInputField() {
+        dynamicTablePageObjects.insertDataInDataTable();
+    }
+
+    @And("^User validates table data and json data$")
+    public void userValidatesTableDataAndJsonData() throws IOException {
+        dynamicTablePageObjects.validateTableAndJsonData();
+    }
 }

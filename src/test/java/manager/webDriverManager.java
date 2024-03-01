@@ -1,5 +1,6 @@
 package manager;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
@@ -21,7 +22,8 @@ public class webDriverManager {
     public static WebDriver createWebDriver(){
         ChromeOptions co = new ChromeOptions();
         co.addArguments("--remote-allow-origins=*");
-        webDriver = io.github.bonigarcia.wdm.WebDriverManager.chromedriver().capabilities(co).create();
+        webDriver = WebDriverManager.chromedriver().capabilities(co).create();
+        webDriver.manage().window().maximize();
         return webDriver;
     }
 }
